@@ -1,0 +1,165 @@
+import javax.net.ssl.*;
+import java.io.*;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+
+public class MultiThreadedSSLServer {
+
+    public static void main(String[] args) {
+        int port = 4433; // SSL服务端监听的端口
+
+        try {
+            // 创建SSL上下文
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+
+            // 初始化SSL上下文，加载密钥库和信任库
+            char[] password = "password".toCharArray();
+            KeyStore keyStore = KeyStore.getInstance("JKS");
+            FileInputStream keyStoreFile = new FileInputStream("server_keystore.jks");
+            keyStore.load(keyStoreFile, password);
+            keyStoreFile.close();
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+            keyManagerFactory.init(keyStore, password);
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+            trustManagerFactory.init(keyStore);
+
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+
+            // 创建SSL ServerSocket工厂
+            SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
+
+            // 创建SSL ServerSocket
+            SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(port);
+
+            System.out.println("SSL服务端已启动，监听端口 " + port);
+
+            while (true) {
+                // 等待客户端连接
+                SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
+
+                // 创建一个新线程处理客户端连接
+                Thread clientThread = new Thread(() -> handleClientRequest(sslSocket));
+                clientThread.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleClientRequest(SSLSocket sslSocket) {
+        try {
+            // 设置SSL参数
+            sslSocket.setNeedClientAuth(true);
+
+            // 获取输入和输出流
+            InputStream inputStream = sslSocket.getInputStream();a
+            OutputStream outputStream = sslSocket.getOutputStream();
+
+            // 在这里处理客户端请求，读取输入流并发送响应
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String clientMessage;
+
+            while ((clientMessage = reader.readLine()) != null) {
+                System.out.println("Received from client: " + clientMessage);
+
+                // 在这里可以根据客户端的请求进行处理和响应
+
+                // 示例：向客户端发送响应
+                String response = "Hello from SSL server";
+                outputStream.write(response.getBytes());
+                outputStream.flush();
+            }
+
+            // 关闭连接
+            sslSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+public class CustomTrustManager implements X509TrustManager {
+
+    // 实现getAcceptedIssuers方法，返回受信任的证书颁发机构
+    public X509Certificate[] getAcceptedIssuers() {
+        return null; // 返回null表示信任所有证书颁发机构
+    }
+
+    // 实现checkClientTrusted方法，用于客户端证书验证
+    public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+        // 在这里可以自定义客户端证书验证逻辑
+        // 如果不需要客户端证书验证，可以抛出CertificateException或不进行任何操作
+    }
+
+    // 实现checkServerTrusted方法，用于服务器证书验证
+    public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+        // 在这里可以自定义服务器证书验证逻辑
+        // 如果信任服务器证书，不抛出异常即可
+        // 如果不信任，可以抛出CertificateException
+    }
+}
+
+
+
+
+
+import javax.net.ssl.*;
+import java.io.*;
+import java.net.*;
+import java.security.SecureRandom;
+
+public class SSLServerCertificateValidation {
+
+    public static void main(String[] args) {
+        String httpsUrl = "https://example.com"; // 替换为你要访问的HTTPS URL
+
+        try {
+            // 创建SSL上下文
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, null, new SecureRandom());
+
+            // 创建HTTPS连接
+            URL url = new URL(httpsUrl);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+            // 设置SSL上下文，使用默认的TrustManager来验证服务器证书
+            connection.setSSLSocketFactory(sslContext.getSocketFactory());
+
+            // 设置请求方法为GET
+            connection.setRequestMethod("GET");
+
+            // 获取服务器响应代码
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+
+            // 读取响应内容
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                StringBuilder response = new StringBuilder();
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                reader.close();
+
+                // 打印响应内容
+                System.out.println("Response Data:");
+                System.out.println(response.toString());
+            } else {
+                System.err.println("HTTP request failed.");
+            }
+
+            // 关闭连接
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
