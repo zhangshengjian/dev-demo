@@ -1,0 +1,732 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>5. 实战案例</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4d9a08c4-788f-4166-a408-7f05530a558e" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🟠</span></div><h1 class="page-title">5. 实战案例</h1><p class="page-description"></p></header><div class="page-body"><nav id="9d1b7939-9ef0-4b57-a10b-6cf14dc84101" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e52cbee2-1654-4c01-ac2f-25d821758183">服务器认证篇</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b32d492-153b-41aa-8aba-fe184bda870f">单向认证和双向认证</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#979af627-559b-41dc-8937-1732ca508d44">1. <strong>单向认证</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ed8e131f-251a-4e69-9cf3-345bf17370d2">2. <strong>双向认证</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a5f19668-4742-40b3-a365-d9bfb2fa59b7">application.properties</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#de6ac2fa-208e-4564-b6ae-fea7c05932a3">1. 配置解释</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a736d406-b645-4d59-ac07-8105a65ad1ea">2. 配置样例</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2cc7720c-d116-4a0b-b032-dea30cfff15d">TIPS</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3019806b-c44a-4baf-abcc-1731fd3d18e1">1. 验证原理的通俗易懂解释</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1fdb7cb0-2de0-4011-af01-528e86c06230">2. server.ssl.trust-store 和 server.ssl.trust-store-password  服务器端会根据这段属性配置去鉴别 客户端发来的证书是否合法是吗</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c13d7e6-08ec-435b-be81-626a1e509c2e">3. server.ssl.key-store 和 server.ssl.key-store-password 这两个配置是服务端自证自己吗</a></div></nav><h1 id="e52cbee2-1654-4c01-ac2f-25d821758183" class="">服务器认证篇</h1><p id="0f981a39-1a08-4920-bed4-09323e65a6ea" class="">
+</p><h2 id="3b32d492-153b-41aa-8aba-fe184bda870f" class="">单向认证和双向认证</h2><h3 id="979af627-559b-41dc-8937-1732ca508d44" class="">1. <strong>单向认证</strong></h3><ul id="bd4ba08b-3f2f-4a8d-8cbf-1ab563303e7e" class="bulleted-list"><li style="list-style-type:disc">服务器验证自己的身份：在单向认证中，服务器会验证自己的身份，以确保客户端连接到合法的服务器。服务器会提供一个SSL/TLS证书，客户端用来验证服务器的身份。</li></ul><ul id="f02ac1fa-5ef3-4a28-95ac-ca08d2c44509" class="bulleted-list"><li style="list-style-type:disc">客户端不验证身份：客户端不需要提供证书或凭据来验证自己的身份。它只关心确保它连接到了正确的服务器。</li></ul><h3 id="ed8e131f-251a-4e69-9cf3-345bf17370d2" class="">2. <strong>双向认证</strong></h3><ul id="dc3bf8c7-8aff-4fbb-a3ac-75a3284abc80" class="bulleted-list"><li style="list-style-type:disc">服务器验证自己的身份：与单向认证一样，服务器在双向认证中也验证自己的身份，以确保客户端连接到合法的服务器。服务器提供SSL/TLS证书供客户端验证。</li></ul><ul id="73d759ce-f9fe-4cf0-b3d6-6ee15d8f28fd" class="bulleted-list"><li style="list-style-type:disc">客户端验证自己的身份：与单向认证不同，客户端也需要提供证书或凭据来验证自己的身份，以确保服务器连接到合法的客户端。这就是为什么它被称为&quot;双向&quot;认证，因为双方都需要验证对方的身份。</li></ul><p id="81bcedff-7cf9-4f4f-a212-3f0d211b80ba" class="">
+</p><pre id="acf59e2f-f688-4433-9164-e32d14d0cd5e" class="code code-wrap"><code>package com.dev.demo.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ServerController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ServerController.class);
+
+    @PostMapping(&quot;/xyz/demo/status&quot;)
+    public String demo(@RequestBody String requestBody) {
+        try {
+            logger.info(&quot;Server accept request:\n {}&quot;, requestBody);
+            // 在这里进行XML数据的解析和相应的处理
+            // 可以使用XML解析库如JAXB或DOM来处理XML数据
+
+            // 构建响应 XML 数据
+            String responseData = &quot;&lt;ServiceOutput&gt;\n&quot; +
+                    &quot;    &lt;msg&gt;Msg Received&lt;/msg&gt;\n&quot; +
+                    &quot;&lt;/ServiceOutput&gt;&quot;;
+
+            logger.info(&quot;Server response: {}&quot;, responseData);
+
+            return responseData;
+        } catch (Exception e) {
+            // 处理异常
+            return e.getMessage();
+        }
+    }
+}</code></pre><h2 id="a5f19668-4742-40b3-a365-d9bfb2fa59b7" class="">application.properties</h2><h3 id="de6ac2fa-208e-4564-b6ae-fea7c05932a3" class="">1. 配置解释</h3><pre id="f9dbe386-39fa-4acd-a4bc-9816cdc2748b" class="code code-wrap"><code># Server Setting:
+server.port：指定服务器监听的端口。
+server.ssl.key-store：指定服务器的SSL/TLS密钥库，用于服务器证书。
+server.ssl.key-store-password：密钥库的密码。
+server.ssl.key-store-type：密钥库的类型，通常是 PKCS12。
+
+# Client Setting: (如下配置如果设定，说明就是要走双向认证)
+server.ssl.trust-store：指定服务器信任的客户端证书的信任库，或者是客户端证书本身。（一般格式为 .jds 或.p12 或 .pfx，这个文件内容需要客户端也就是调用放来提供给你，然后需要放到 resources 目录下）
+server.ssl.trust-store-password：信任库的密码。（这个文件内容需要客户端也就是调用放来提供给你）
+server.ssl.trust-store-type：信任库的类型，通常是 PKCS12。
+server.ssl.client-auth：配置客户端证书验证方式，need表示需要客户端提供有效的证书。</code></pre><h3 id="a736d406-b645-4d59-ac07-8105a65ad1ea" class="">2. 配置样例</h3><pre id="73d283f5-8846-4fda-a83e-e3355c05bf52" class="code code-wrap"><code># =================================== example =================================
+# Server Setting 如果是单向认证，只需要在服务器端配置如下即可，访问的时候请使用 https
+server.port=8082
+server.ssl.key-store=classpath:keystore.p12
+server.ssl.key-store-password=19940213
+server.ssl.key-store-type=PKCS12
+
+# Client Setting 如果是双向认证需要在服务端多配置如下内容
+server.ssl.trust-store=classpath:truststore.p12
+server.ssl.trust-store-password=19940213
+server.ssl.trust-store-type=PKCS12
+server.ssl.client-auth=need</code></pre><h2 id="2cc7720c-d116-4a0b-b032-dea30cfff15d" class="">TIPS</h2><h3 id="3019806b-c44a-4baf-abcc-1731fd3d18e1" class="">1. 验证原理的通俗易懂解释</h3><p id="f7fe8602-581d-4451-9f66-a66013cd4e4e" class="">双向认证是一种增强的SSL/TLS通信安全机制，确保客户端和服务器之间的互相验证。在你提供的配置中，以下是验证原理的通俗易懂解释：</p><ol type="1" id="2c00dc81-4a33-4ad7-905a-99805112d80c" class="numbered-list" start="1"><li><strong>服务器验证客户端（客户端证书验证）</strong>：<ul id="413955e4-02c3-4ef6-9174-8a90fda90424" class="bulleted-list"><li style="list-style-type:disc"><strong>服务器端配置</strong>：<ul id="adb0841d-625b-42d3-90dc-f1a3b2674b42" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.key-store</code>：服务器使用的SSL证书存储，包含服务器的私钥和公钥。</li></ul><ul id="e3b26555-c38c-4f32-8115-f16583d2a892" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.key-store-password</code>：保护SSL证书存储的密码。</li></ul><ul id="c94ea924-7d13-47f9-9b75-abd6023ad499" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.key-store-type</code>：SSL证书存储的类型（通常为PKCS12）。</li></ul><ul id="0b391528-2443-4519-b615-1dbd55b8e5f8" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.client-auth</code>：要求客户端提供证书（<code>need</code>表示需要）。</li></ul></li></ul><ul id="e7ae5381-82b2-436e-9988-c60513120057" class="bulleted-list"><li style="list-style-type:disc"><strong>原理</strong>：服务器使用其私钥进行SSL/TLS通信。当客户端连接到服务器时，服务器会要求客户端提供一个SSL证书，证明客户端的身份。客户端会将其证书发送给服务器。</li></ul><ul id="62906ce6-48eb-4511-bbb8-db51f90b5af3" class="bulleted-list"><li style="list-style-type:disc"><strong>验证</strong>：服务器使用其信任库中的根证书或中间CA证书来验证客户端提供的证书是否由受信任的CA签发。如果客户端的证书通过验证，服务器将信任客户端，并继续SSL通信。否则，如果证书验证失败，连接将被拒绝。</li></ul></li></ol><ol type="1" id="22933743-2108-440f-9481-2a0398e2d93b" class="numbered-list" start="2"><li><strong>客户端验证服务器（服务器证书验证）</strong>：<ul id="c9a93141-6e98-44dc-b406-ca0683adf3e9" class="bulleted-list"><li style="list-style-type:disc"><strong>客户端配置</strong>：<ul id="05b313f3-b8db-4a1b-a71a-e058b7a2987b" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.trust-store</code>：客户端使用的SSL信任库，包含信任的CA根证书或中间CA证书。</li></ul><ul id="10087b51-898f-45d6-a4f8-73999b6f62e9" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.trust-store-password</code>：保护信任库的密码。</li></ul><ul id="65b43d08-c095-4538-be5b-5fa569d5f1b8" class="bulleted-list"><li style="list-style-type:circle"><code>server.ssl.trust-store-type</code>：SSL信任库的类型（通常为PKCS12）。</li></ul></li></ul><ul id="48c64873-77d5-4f09-9e37-a4653089f035" class="bulleted-list"><li style="list-style-type:disc"><strong>原理</strong>：客户端使用信任库中的根证书或中间CA证书来验证服务器的SSL证书是否由受信任的CA签发。服务器在连接建立时会将自己的SSL证书发送给客户端。</li></ul><ul id="1585b849-24ec-42c6-9569-f1a4c23c77f9" class="bulleted-list"><li style="list-style-type:disc"><strong>验证</strong>：客户端使用信任库中的证书来验证服务器的证书是否受信任。如果服务器的证书通过验证，客户端信任服务器，并继续SSL通信。如果验证失败，客户端将拒绝连接，因为服务器的证书未被信任。</li></ul></li></ol><p id="120613fc-7912-440a-92ba-55412721fdd2" class="">总之，双向认证通过客户端和服务器之间的相互验证确保了通信的安全性。服务器验证客户端证书，以确保客户端的合法性，而客户端验证服务器证书，以确保连接到受信任的服务器。这种方式可以防止中间人攻击和确保通信的机密性和完整性。</p><h3 id="1fdb7cb0-2de0-4011-af01-528e86c06230" class="">2. server.ssl.trust-store 和 server.ssl.trust-store-password  服务器端会根据这段属性配置去鉴别 客户端发来的证书是否合法是吗</h3><p id="912b0c35-0852-4250-9eec-428382fe2fbd" class="">是的，服务器端可以使用 <code>server.ssl.trust-store</code> 和 <code>server.ssl.trust-store-password</code> 这两个属性来配置信任存储（trust store），以便验证客户端发送的证书的合法性。这是一种常见的配置，通常用于建立安全的SSL/TLS连接。以下是这两个属性的作用：</p><ol type="1" id="9d834c6e-7c2e-4485-bbb5-ee53064bb897" class="numbered-list" start="1"><li><code>server.ssl.trust-store</code>: 这个属性指定了服务器端应该使用的信任存储的路径。信任存储是包含受信任的证书颁发机构（Certificate Authorities，CA）证书的文件。服务器会使用这些CA证书来验证客户端发送的证书是否由受信任的颁发机构签发。</li></ol><ol type="1" id="bc60ef53-3479-4f18-a429-0a885cc59460" class="numbered-list" start="2"><li><code>server.ssl.trust-store-password</code>: 这个属性是信任存储的密码。信任存储通常是一个受密码保护的文件，服务器需要提供密码来解锁信任存储以访问其中的证书。</li></ol><p id="583d3796-49fb-4d3a-9dac-3f86c25f1925" class="">当客户端与服务器建立SSL/TLS连接时，客户端通常会发送其自己的证书，而服务器则使用配置的信任存储来验证客户端证书的有效性。如果客户端的证书是由信任的颁发机构签发的，并且可以在信任存储中找到对应的根证书，那么服务器会认为客户端证书是合法的。如果验证成功，服务器将继续建立连接，否则它可以选择拒绝连接或采取其他操作，这取决于服务器的配置。</p><p id="28db96d8-0558-4b8c-8e05-674bf51ff4ed" class="">总之，<code>server.ssl.trust-store</code> 和 <code>server.ssl.trust-store-password</code> 属性是用于服务器端验证客户端证书合法性的重要配置参数，以确保建立安全的通信连接。</p><h3 id="4c13d7e6-08ec-435b-be81-626a1e509c2e" class="">3. server.ssl.key-store 和 server.ssl.key-store-password 这两个配置是服务端自证自己吗</h3><p id="03a1f30d-a713-4580-92dc-57105b60412f" class="">是的，<code>server.ssl.key-store</code> 和 <code>server.ssl.key-store-password</code> 这两个配置是用于服务端自证自己的情况。它们用于配置服务器端的密钥库（key store），以便服务器可以使用自己的证书来建立SSL/TLS连接。</p><p id="88ade861-bb3c-4d16-bffc-d5c10c2938a5" class="">以下是这两个配置的作用：</p><ol type="1" id="e1313c4e-0d9e-49cc-bbef-7b558a57416b" class="numbered-list" start="1"><li><code>server.ssl.key-store</code>: 这个属性指定了服务器端密钥库的位置。密钥库是一个包含服务器证书的文件，通常是在服务器自己生成或获取的。服务器将使用这个证书来向客户端证明其身份。</li></ol><ol type="1" id="091a42b1-27e7-4e88-a3f0-bc295fc432b9" class="numbered-list" start="2"><li><code>server.ssl.key-store-password</code>: 这个属性是密钥库的密码。密钥库通常是受密码保护的，因此服务器需要提供密码以解锁密钥库，以便在SSL/TLS握手过程中使用服务器证书。</li></ol><p id="142b0888-067c-4615-a9a7-fbfae853008d" class="">当客户端和服务器建立SSL/TLS连接时，服务器会向客户端发送自己的证书，客户端可以使用服务器证书来验证服务器的身份。这对于确保客户端与合法服务器通信非常重要。因此，<code>server.ssl.key-store</code> 和 <code>server.ssl.key-store-password</code> 配置用于服务器端自证自己的合法性。</p><p id="59cc4bf9-2719-47bf-b187-66dfd2ae6b49" class="">需要注意的是，这两个配置通常用于配置服务器的双向认证，其中服务器验证客户端的证书，同时客户端也验证服务器的证书。这提供了更高级别的安全性，确保双方都是合法的通信实体。如果只需要单向认证，只需客户端验证服务器，那么只需要配置服务器端的证书，而不需要客户端证书的配置。</p></div></article></body></html>
